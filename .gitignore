@@ -1,0 +1,36 @@
+# Python / Backend
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+*.db
+backend/.pytest_cache/
+
+# Node / Admin Dashboard
+node_modules/
+.next/
+out/
+build/
+dist/
+.DS_Store
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Flutter / Mobile
+.dart_tool/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+android/.gradle
+.idea/
+*.iml

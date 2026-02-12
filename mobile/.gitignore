@@ -28,6 +28,10 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
+
+# Ignore local build artifacts, but ALLOW web build for deployment
+build/
+!build/web/
 .pub/
 /build/
 

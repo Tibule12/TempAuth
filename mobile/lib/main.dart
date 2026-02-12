@@ -68,32 +68,4 @@ class TempAuthApp extends StatelessWidget {
     );
   }
 }
-          background: Color(0xFF111827),
-        ),
-        useMaterial3: true,
-        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
-        scaffoldBackgroundColor: const Color(0xFF111827),
-        cardTheme: CardTheme(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: BorderSide(color: Colors.grey.shade800),
-            ),
-            color: const Color(0xFF1F2937),
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: const Color(0xFF111827),
-          surfaceTintColor: Colors.transparent,
-          centerTitle: true,
-          titleTextStyle: GoogleFonts.inter(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-          ),
-        )
-      ),
-      themeMode: ThemeMode.system, 
-      home: const HomeScreen(),
-    );
-  }
-}
+

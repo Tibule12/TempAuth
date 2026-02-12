@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 import 'screens/home_screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
   runApp(const TempAuthApp());
 }
 
@@ -17,37 +22,52 @@ class TempAuthApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2563EB), 
-          secondary: const Color(0xFF10B981), 
-          surface: Colors.grey[50],
+          seedColor: const Color(0xFF4F46E5), // Indigo 600
+          background: const Color(0xFFF8FAFC), // Slate 50
+          surface: Colors.white,
+          primary: const Color(0xFF4F46E5),
+          secondary: const Color(0xFF10B981),
         ),
         useMaterial3: true,
-        textTheme: GoogleFonts.interTextTheme(),
+        scaffoldBackgroundColor: const Color(0xFFF8FAFC),
+        textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(
+          bodyColor: const Color(0xFF1E293B), // Slate 800
+          displayColor: const Color(0xFF0F172A), // Slate 900
+        ),
         cardTheme: CardTheme(
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: Colors.grey.shade200),
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: Colors.grey.shade100, width: 1),
           ),
           color: Colors.white,
+          margin: EdgeInsets.zero,
         ),
         appBarTheme: AppBarTheme(
+          backgroundColor: const Color(0xFFF8FAFC),
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: false,
+          titleTextStyle: GoogleFonts.inter(
+            color: const Color(0xFF0F172A),
+            fontWeight: FontWeight.w700,
+            fontSize: 24,
+            letterSpacing: -0.5,
+          ),
+          iconTheme: const IconThemeData(color: Color(0xFF1E293B)),
+        ),
+        bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.transparent,
-          centerTitle: true,
-          titleTextStyle: GoogleFonts.inter(
-            color: Colors.black87,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
-        )
+        ),
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFF60A5FA),
-          secondary: Color(0xFF34D399),
-          surface: Color(0xFF1F2937),
+      home: const HomeScreen(),
+    );
+  }
+}
           background: Color(0xFF111827),
         ),
         useMaterial3: true,

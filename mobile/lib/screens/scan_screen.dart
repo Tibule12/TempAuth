@@ -34,8 +34,8 @@ class _ScanScreenState extends State<ScanScreen> {
         throw FormatException("Invalid QR Code");
       }
 
-      final String? secret = uri.queryParameters['secret'];
-      final String? issuer = uri.queryParameters['issuer'] ?? 'Unknown';
+      final String? secretRaw = uri.queryParameters['secret'];
+      final String issuerVal = uri.queryParameters['issuer'] ?? 'Unknown';
       // Path usually contains issuer and account name, e.g., /TempAuth:user@example.com
       // We can clean it up
       String label = uri.path.replaceAll('/', '');
@@ -43,13 +43,13 @@ class _ScanScreenState extends State<ScanScreen> {
         label = label.split(':').last;
       }
 
-      if (secret == null) throw FormatException("No secret found");
+      if (secretRaw == null) throw FormatException("No secret found");
 
       final newToken = TokenModel(
         id: const Uuid().v4(), 
-        issuer: issuer, 
+        issuer: issuerVal, 
         accountName: label, 
-        secret: secret, 
+        secret: secretRaw, 
         createdAt: DateTime.now()
       );
 

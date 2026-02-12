@@ -1,7 +1,10 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Security
+from fastapi.security import APIKeyHeader
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 import pyotp
+import os
 # import qrcode
 import io
 import base64
@@ -10,10 +13,34 @@ from datetime import datetime, timedelta
 import models, schemas, database
 from database import engine
 
+# --- Security Configuration ---
+API_KEY = os.getenv("TEMP_AUTH_API_KEY", "dev_secret_key_123")
+API_KEY_NAME = "X-API-Key"
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+
+async def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header == API_KEY:
+        return api_key_header
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Could not validate credentials"
+    )
+
 # Create tables
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="TempAuth API")
+app = FastAPI(title="TempAuth API", dependencies=[Depends(get_api_key)])
+
+# Configure CORS
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Dependency
 def get_db():
@@ -65,7 +92,11 @@ def create_temp_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     # Construct response
     return schemas.UserResponse(
-        **db_user.__dict__,
+        id=db_user.id,
+        username=db_user.username,
+        email=db_user.email,
+        is_active=db_user.is_active,
+        created_at=db_user.created_at,
         qr_code_base64=img_str,
         manual_entry_secret=secret
     )

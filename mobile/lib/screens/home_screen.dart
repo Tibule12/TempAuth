@@ -436,7 +436,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                         children: [
                                           Text(
                                             "${code.substring(0,3)} ${code.substring(3)}",
-                                            style: GoogleFonts.jetbrainsMono(
+                                            style: GoogleFonts.robotoMono(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
                                               color: const Color(0xFF0F172A),
